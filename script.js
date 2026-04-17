@@ -155,7 +155,7 @@ function setupToolWorkspace(toolId) {
 
         const levelItems = document.querySelectorAll('.comp-level-item');
         const hiddenInput = document.getElementById('compress-quality');
-        
+
         levelItems.forEach(item => {
             item.addEventListener('click', () => {
                 levelItems.forEach(i => i.classList.remove('active'));
@@ -228,7 +228,7 @@ function handleFiles(files) {
     } else {
         renderFileList();
     }
-    
+
     if (currentTool === 'compress') updateCompressStats();
 }
 
@@ -719,7 +719,7 @@ async function processOCR() {
 async function processCompress() {
     progressText.innerText = "Menginisialisasi optimasi mendalam...";
     const { PDFDocument, PDFRawStream, PDFName, PDFDict } = PDFLib;
-    
+
     // Quality settings
     const qualityLevel = parseInt(document.getElementById('compress-quality').value) || 40;
     const quality = qualityLevel / 100;
@@ -730,13 +730,13 @@ async function processCompress() {
         const pdfData = await file.arrayBuffer();
         const srcDoc = await PDFDocument.load(pdfData);
         const pdfDoc = await PDFDocument.create();
-        
+
         // This map stores [Original Reference ID] -> [New Compressed Image Object]
         const imageMap = new Map();
-        
+
         progressText.innerText = "Menganalisis aset gambar...";
         const indirectObjects = srcDoc.context.enumerateIndirectObjects();
-        
+
         for (const [ref, obj] of indirectObjects) {
             if (obj instanceof PDFRawStream) {
                 const dict = obj.dict;
@@ -744,12 +744,12 @@ async function processCompress() {
                     try {
                         const width = dict.get(PDFName.of('Width')).numberValue;
                         const height = dict.get(PDFName.of('Height')).numberValue;
-                        
+
                         // Extract and Compress
                         const rawBytes = obj.getContents();
                         const blob = new Blob([rawBytes]);
                         const url = URL.createObjectURL(blob);
-                        
+
                         const img = await new Promise((resolve, reject) => {
                             const i = new Image();
                             i.onload = () => resolve(i);
@@ -762,18 +762,18 @@ async function processCompress() {
                         let factor = 0.8;
                         if (qualityLevel < 30) factor = 0.5;
                         if (qualityLevel > 70) factor = 1.0;
-                        
+
                         canvas.width = width * factor;
                         canvas.height = height * factor;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        
+
                         const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
                         const compressedBytes = Uint8Array.from(atob(compressedDataUrl.split(',')[1]), c => c.charCodeAt(0));
-                        
+
                         const newImg = await pdfDoc.embedJpg(compressedBytes);
                         imageMap.set(ref.toString(), newImg);
-                        
+
                         URL.revokeObjectURL(url);
                     } catch (e) {
                         // Skip if format is incompatible with browser Image()
@@ -784,7 +784,7 @@ async function processCompress() {
 
         progressText.innerText = "Menyusun ulang struktur dokumen...";
         const copiedPages = await pdfDoc.copyPages(srcDoc, srcDoc.getPageIndices());
-        
+
         for (let i = 0; i < copiedPages.length; i++) {
             const page = copiedPages[i];
             // Access internal resources to swap pointers
@@ -914,40 +914,40 @@ async function processSplit() {
     } else if (splitMainTab === 'size') {
         const targetSizeInBytes = maxSizePerFile * (sizeUnit === 'MB' ? 1024 * 1024 : 1024);
         const zip = new JSZip();
-        
+
         let currentChunkPages = [];
         let chunkCount = 1;
 
         for (let i = 0; i < totalPages; i++) {
             progressText.innerText = `Menganalisis halaman ${i + 1} untuk ukuran file...`;
-            
+
             // Try adding this page to the current chunk
             currentChunkPages.push(i);
-            
+
             const tempPdf = await PDFDocument.create();
             const copiedPages = await tempPdf.copyPages(pdfDoc, currentChunkPages);
             copiedPages.forEach(p => tempPdf.addPage(p));
             const tempBytes = await tempPdf.save();
-            
+
             // If it exceeds the limit AND it's not the first page of the chunk
             if (tempBytes.length > targetSizeInBytes && currentChunkPages.length > 1) {
                 // Remove the last page from this chunk
                 currentChunkPages.pop();
-                
+
                 // Finalize the previous state of this chunk
                 const finalSubPdf = await PDFDocument.create();
                 const finalCopied = await finalSubPdf.copyPages(pdfDoc, currentChunkPages);
                 finalCopied.forEach(p => finalSubPdf.addPage(p));
                 const finalPartBytes = await finalSubPdf.save();
-                
+
                 zip.file(`Bagian_${chunkCount}.pdf`, finalPartBytes);
                 chunkCount++;
-                
+
                 // Start a new chunk with the current page
                 currentChunkPages = [i];
             }
         }
-        
+
         // Finalize the last chunk
         if (currentChunkPages.length > 0) {
             const lastSubPdf = await PDFDocument.create();
