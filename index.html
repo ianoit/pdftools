@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Magic Labs - Alat PDF Lengkap</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Hidden Render Container for Visual Conversion -->
+        <div id="render-container"
+            style="position: absolute; left: -9999px; top: -9999px; width: 800px; background: white; color: black; padding: 40px; min-height: 1000px;">
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div
+                    style="width: 36px; height: 36px; background: var(--primary-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <span class="logo-text">PDF Tools</span>
+            </div>
+            <nav class="side-nav">
+                <a href="#" class="nav-item active" data-target="home"><i class="fa-solid fa-house"></i> Beranda</a>
+                <a href="#" class="nav-item" data-target="merge"><i class="fa-solid fa-layer-group"></i> Merge PDF</a>
+                <a href="#" class="nav-item" data-target="split"><i class="fa-solid fa-scissors"></i> Split PDF</a>
+                <a href="#" class="nav-item" data-target="ocr"><i class="fa-solid fa-eye"></i> OCR PDF</a>
+                <a href="#" class="nav-item" data-target="compress"><i class="fa-solid fa-compress"></i> Compress
+                    PDF</a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>&copy; 2026 PDF Tools</p>
+                <p class="creator">Dibuat dengan <i class="fa-solid fa-heart" style="color: #ef4444;"></i></p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar (Mobile mainly) -->
+            <header class="topbar">
+                <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="top-nav-items">
+                    <!-- Header sengaja dikosongi sesuai permintaan -->
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Home Section -->
+                <section id="home" class="view-section active">
+                    <div class="hero">
+                        <div class="hero-content">
+                            <h1
+                                style="font-size: 42px; font-weight: 800; color: var(--text-main); margin-bottom: 20px; line-height: 1.2;">
+                                Solusi PDF Cerdas Untuk<br><span style="color: var(--primary-color);">Efisiensi
+                                    Kerja</span> Anda.</h1>
+                            <p style="font-size: 16px; color: var(--text-mute); max-width: 600px; line-height: 1.6;">
+                                Kelola dokumen PDF Anda dengan alat pemrosesan sisi-klien yang aman. Tanpa upload ke
+                                server, privasi Anda terjaga 100%.</p>
+                        </div>
+                    </div>
+
+                    <div class="tools-layout">
+                        <div class="section-title">
+                            <h2>Alat Populer</h2>
+                            <p>Pilih alat yang Anda butuhkan untuk memulai</p>
+                        </div>
+
+                        <div class="tools-grid">
+                            <div class="tool-card hover-lift" data-target="merge">
+                                <div class="tool-icon" style="background: #E0E7FF; color: #4338CA;"><i
+                                        class="fa-solid fa-layer-group"></i></div>
+                                <h3>Merge PDF</h3>
+                                <p>Gabungkan banyak file PDF secara berurutan dengan mudah dalam hitungan detik.</p>
+                            </div>
+                            <div class="tool-card hover-lift" data-target="split">
+                                <div class="tool-icon" style="background: #FCE7F3; color: #DB2777;"><i
+                                        class="fa-solid fa-scissors"></i></div>
+                                <h3>Split PDF</h3>
+                                <p>Pisahkan dokumen PDF besar menjadi beberapa bagian atau ekstrak halaman tertentu.</p>
+                            </div>
+                            <div class="tool-card hover-lift" data-target="ocr">
+                                <div class="tool-icon" style="background: #FEF3C7; color: #D97706;"><i
+                                        class="fa-solid fa-eye"></i></div>
+                                <h3>OCR PDF</h3>
+                                <p>Ekstrak teks dari PDF hasil scan atau gambar agar dapat disalin dan diedit kembali.
+                                </p>
+                            </div>
+                            <div class="tool-card hover-lift" data-target="compress">
+                                <div class="tool-icon" style="background: #D1FAE5; color: #059669;"><i
+                                        class="fa-solid fa-compress"></i></div>
+                                <h3>Compress PDF</h3>
+                                <p>Kecilkan ukuran file PDF Anda dengan kontrol kualitas dan hasil yang optimal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Workspace Tool Section -->
+                <section id="tool-workspace" class="view-section">
+                    <div class="workspace-header">
+                        <button class="btn-icon" id="btn-back"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+                        <h2 id="workspace-title" class="gradient-text">Nama Alat</h2>
+                        <p id="workspace-desc" class="text-mute">Deskripsi tentang alat yang akan dipakai pengguna.</p>
+                    </div>
+
+                    <div class="workspace-main">
+                        <div class="upload-zone" id="upload-box">
+                            <i class="fa-solid fa-cloud-arrow-up zone-icon pulse-anim"></i>
+                            <h3>Tarik & Lepas File Di Sini</h3>
+                            <p>atau klik tombol di bawah untuk menelusuri</p>
+                            <label class="btn-primary" style="margin-top: 24px; cursor: pointer;">
+                                <i class="fa-solid fa-folder-open"></i> Pilih File PDF
+                                <input type="file" id="file-input" multiple style="display: none;">
+                            </label>
+                            <span class="file-note" id="file-note">Mendukung format PDF. Maks ukuran 50MB</span>
+                        </div>
+
+                        <!-- Panel Konfigurasi, muncul saat file sudah diunggah -->
+                        <div class="workspace-panel hidden" id="workspace-panel"
+                            style="display: flex; gap: 24px; align-items: flex-start; background: transparent; border: none; padding: 0; box-shadow: none;">
+
+                            <!-- Daftar File Terpilih (Kiri) -->
+                            <div class="selected-files glass-panel" style="flex: 1; padding: 30px; min-height: 500px;">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                    <h3 style="margin: 0; font-size: 18px; border-bottom: none; padding-bottom: 0;">File
+                                        Terpilih</h3>
+                                    <button class="btn-primary" id="btn-add-more"
+                                        style="font-size: 12px; padding: 8px 14px;"><i class="fa-solid fa-plus"></i>
+                                        Tambah File</button>
+                                </div>
+                                <ul class="file-list" id="file-list">
+                                    <!-- List item injeksi via JS -->
+                                </ul>
+                            </div>
+
+                            <!-- Opsi dan Aksi (Kanan) -->
+                            <div class="settings-sidebar glass-panel"
+                                style="width: 340px; padding: 25px; position: sticky; top: 90px; overflow: hidden; display: flex; flex-direction: column; gap: 20px;">
+                                <div class="tool-options" id="tool-options">
+                                    <!-- Option setting disisipkan via JS sesuai tool -->
+                                </div>
+                                <button class="btn-outline" id="btn-clear"
+                                    style="width: 100%; border: 1px dashed #FCA5A5; color: #EF4444; justify-content: center;">
+                                    <i class="fa-solid fa-trash-can"></i> Bersihkan Antrean
+                                </button>
+                                <button class="btn-gradient" id="btn-process"
+                                    style="width: 100%; padding: 14px; font-size: 16px; border-radius: 10px;">
+                                    <span id="btn-text-process">Split PDF</span> <i
+                                        class="fa-solid fa-circle-arrow-right" style="margin-left: 8px;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loader Modal -->
+    <div class="loader-overlay hidden" id="loader">
+        <div class="loader-box glass-panel">
+            <div class="spinner"></div>
+            <h3>Memproses...</h3>
+            <p>Sistem sedang bekerja dengan file Anda secara lokal.</p>
+            <div class="progress-container hidden" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="progress-text" id="progress-text"></p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay hidden" id="success-modal">
+        <div class="modal-box glass-panel">
+            <div class="modal-icon text-success"><i class="fa-regular fa-circle-check"></i></div>
+            <h3>Selesai!</h3>
+            <p>Pemrosesan berhasil. Silakan unduh hasilnya di bawah ini.</p>
+            <div class="modal-actions">
+                <button class="btn-outline" id="btn-close-modal">Tutup</button>
+                <button class="btn-gradient" id="btn-download"><i class="fa-solid fa-download"></i> Unduh Hasil</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div class="modal-overlay hidden" id="preview-modal">
+        <div class="modal-box glass-panel"
+            style="max-width: 800px; width: 95%; height: 85vh; display: flex; flex-direction: column; padding: 25px;">
+            <div class="modal-header"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0; font-size: 20px; text-align: left;" id="preview-title">Preview File</h3>
+                <button class="btn-icon" id="btn-close-preview" style="margin: 0; font-size: 20px; color: #ef4444;"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="preview-container"
+                style="flex: 1; background: #fff; border-radius: 8px; overflow: hidden; position: relative;">
+                <!-- Iframe or image will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts: PDF-lib, JSZip (untuk pack hasil split), Tesseract.js (untuk OCR) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/meshesha/pptxjs@master/dist/pptxjs.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/meshesha/pptxjs@master/dist/pptxjs.css">
+    <script src="script.js"></script>
+</body>
+
+</html>
